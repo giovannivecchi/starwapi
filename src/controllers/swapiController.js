@@ -5,6 +5,8 @@ import axios from 'axios';
 class swapiController {
   async findFilms(req, res) {
     try {
+      const { titulo, personagem } = req.query;
+
       const results = await api.get('films/').then(res => {
         return res.data.results;
       });
@@ -21,10 +23,14 @@ class swapiController {
 
       const jsonReturn = await Promise.all(promises);
 
+      const filmsFiltered = await swapiController.filtered(jsonReturn, {
+        titulo: titulo,
+        personagem: personagem,
+      });
+
       return res.status(200).json(jsonReturn);
     } catch (err) {
-      console.log(err);
-      return res.status(500).json({ error: true });
+      return res.status(500).json({ error: err.message });
     }
   }
 
@@ -63,6 +69,28 @@ class swapiController {
     });
 
     const jsonReturn = await Promise.all(planet);
+
+    return jsonReturn;
+  }
+
+  static async filtered(dados, filters) {
+    const jsonReturn = await dados.filter(p => {
+      if (filters.titulo !== undefined && filters.titulo !== p.titulo) {
+        return false;
+      }
+
+      for (let index = 0; index < p.personagens.length; index++) {
+        console.log(p.personagens[index].nome);
+        if (
+          filters.personagem !== undefined &&
+          filters.personagem !== p.personagens[index].nome
+        ) {
+          return false;
+        }
+      }
+
+      return true;
+    });
 
     return jsonReturn;
   }
