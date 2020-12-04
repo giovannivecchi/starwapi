@@ -1,40 +1,8 @@
-import api from '../services/api';
-import { format } from 'date-fns';
 import axios from 'axios';
+import { format } from 'date-fns';
 
-class swapiController {
-  async findFilms(req, res) {
-    try {
-      const { titulo, personagem } = req.query;
-
-      const results = await api.get('films/').then(res => {
-        return res.data.results;
-      });
-
-      const promises = results.map(async films => ({
-        titulo: films.title,
-        episodio: films.episode_id,
-        diretor: films.director,
-        produtor: films.producer,
-        dataLancamento: format(new Date(films.release_date), 'dd/MM/yyyy'),
-        personagens: await swapiController.getCharacters(films.characters),
-        planetas: await swapiController.getPlanets(films.planets),
-      }));
-
-      const jsonReturn = await Promise.all(promises);
-
-      const filmsFiltered = await swapiController.filtered(jsonReturn, {
-        titulo: titulo,
-        personagem: personagem,
-      });
-
-      return res.status(200).json(jsonReturn);
-    } catch (err) {
-      return res.status(500).json({ error: err.message });
-    }
-  }
-
-  static async getCharacters(characters) {
+export default {
+  async getCharacters(characters) {
     const character = await characters.map(async people => {
       const characterReturn = await axios.get(people).then(res => {
         return res.data;
@@ -51,48 +19,94 @@ class swapiController {
     const jsonReturn = await Promise.all(character);
 
     return jsonReturn;
-  }
+  },
 
-  static async getPlanets(planets) {
-    const planet = await planets.map(async planet => {
-      const planetReturn = await axios.get(planet).then(res => {
+  async getFilms(films) {
+    const film = await films.map(async film => {
+      const filmReturn = await axios.get(film).then(res => {
         return res.data;
       });
 
       return {
-        nome: planetReturn.name,
-        tamanho: planetReturn.diameter,
-        clima: planetReturn.climate,
-        terreno: planetReturn.terrain,
-        populacao: planetReturn.population,
+        titulo: filmReturn.title,
+        episodio: filmReturn.episode_id,
+        diretor: filmReturn.director,
+        produtor: filmReturn.producer,
+        dataLancamento: format(new Date(filmReturn.release_date), 'dd/MM/yyyy'),
       };
     });
 
-    const jsonReturn = await Promise.all(planet);
+    const jsonReturn = await Promise.all(film);
 
     return jsonReturn;
-  }
+  },
 
-  static async filtered(dados, filters) {
+  async filtered(dados, filters, similar) {
     const jsonReturn = await dados.filter(p => {
-      if (filters.titulo !== undefined && filters.titulo !== p.titulo) {
+      if (filters.titulo !== undefined && filters.titulo !== `"${p.titulo}"`) {
         return false;
       }
-
-      for (let index = 0; index < p.personagens.length; index++) {
-        console.log(p.personagens[index].nome);
-        if (
-          filters.personagem !== undefined &&
-          filters.personagem !== p.personagens[index].nome
-        ) {
-          return false;
-        }
+      if (
+        filters.episodio !== undefined &&
+        filters.episodio !== `"${p.episodio}"`
+      ) {
+        return false;
       }
-
+      if (
+        filters.dataLancamento !== undefined &&
+        filters.dataLancamento !== `"${p.dataLancamento}"`
+      ) {
+        return false;
+      }
+      if (filters.nome !== undefined && filters.nome !== `"${p.nome}"`) {
+        return false;
+      }
+      if (filters.tipo !== undefined && filters.tipo !== `"${p.tipo}"`) {
+        return false;
+      }
+      if (
+        filters.planeta !== undefined &&
+        filters.planeta !== `"${p.planeta}"`
+      ) {
+        return false;
+      }
+      if (filters.nome !== undefined && filters.nome !== `"${p.nome}"`) {
+        return false;
+      }
+      if (filters.tipo !== undefined && filters.tipo !== `"${p.tipo}"`) {
+        return false;
+      }
+      if (
+        filters.planeta !== undefined &&
+        filters.planeta !== `"${p.planeta}"`
+      ) {
+        return false;
+      }
       return true;
     });
 
+    console.log(filters)
+    if (Object.entries(filters).length > 0) {
+      jsonReturn.push({ sugestao: 'teste' });
+    }
+
     return jsonReturn;
-  }
-}
-module.exports = new swapiController();
+  },
+
+  async getSimilar(similar) {
+    const like = await dados.filter(p => {
+      if (similar.director !== undefined && similar.director == p.director) {
+        return true;
+      }
+      return false;
+    });
+
+    const jsonReturn = [];
+    for (let index = 0; index < 4; index++) {
+      console.log(like[index].title);
+      jsonReturn.push({ titulo: like[index].title });
+    }
+
+    return jsonReturn;
+  },
+};
