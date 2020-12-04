@@ -33,7 +33,8 @@ class filmsController {
               titulo: titulo,
               episodio: episodio,
               data_lancamento: dataLancamento,
-            }
+            },
+        'films'
       );
 
       return res.status(200).json(filmsFiltered);

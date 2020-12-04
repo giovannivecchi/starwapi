@@ -85,28 +85,53 @@ export default {
       return true;
     });
 
-    console.log(filters)
     if (Object.entries(filters).length > 0) {
-      jsonReturn.push({ sugestao: 'teste' });
+      const like = [];
+      dados.filter(p => {
+        switch (similar) {
+          case 'films':
+            {
+              null;
+            }
+            break;
+
+          case 'planets': {
+            break;
+          }
+          case 'people': {
+            this.AddOrRemove(jsonReturn, like, p.nome);
+            // if (like.length < 3) {
+            //   for (let index = 0; index < dados.length; index++) {
+            //     if (
+            //       dados[index].nome !== undefined &&
+            //       dados[index].nome !== e.nome &&
+            //       like.length < 3
+            //     ) {
+            //       this.AddOrRemove(jsonReturn, like, dados[index].nome);
+            //     }
+            //   }
+            // }
+          }
+        }
+      });
+
+      console.log(like);
+
+      jsonReturn.push({ sugestao: like });
     }
 
     return jsonReturn;
   },
 
-  async getSimilar(similar) {
-    const like = await dados.filter(p => {
-      if (similar.director !== undefined && similar.director == p.director) {
-        return true;
+  async AddOrRemove(verify, set, field) {
+    let array1 = verify.findIndex(value => value.nome == field);
+    let array2 = set.findIndex(value => value == field);
+    if (array1 < 0) {
+      if (array2 < 0) {
+        set.push(field);
+      } else {
+        set.splice(array2, 1);
       }
-      return false;
-    });
-
-    const jsonReturn = [];
-    for (let index = 0; index < 4; index++) {
-      console.log(like[index].title);
-      jsonReturn.push({ titulo: like[index].title });
     }
-
-    return jsonReturn;
   },
 };

@@ -25,11 +25,17 @@ class peopleController {
 
       const jsonReturn = await Promise.all(promises);
 
-      const peopleFiltered = await swapiController.filtered(jsonReturn, {
-        nome: nome,
-        tipo: tipo,
-        planeta: planeta,
-      });
+      const peopleFiltered = await swapiController.filtered(
+        jsonReturn,
+        Object.entries(req.query).length == 0
+          ? {}
+          : {
+              nome: nome,
+              tipo: tipo,
+              planeta: planeta,
+            },
+        'people'
+      );
 
       return res.status(200).json(peopleFiltered);
     } catch (err) {
