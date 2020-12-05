@@ -6,7 +6,7 @@
 
 A **API swapi** é uma api para listar Filmes, Planetas e Personagens do universo StarWars buscando as informações do site https://swapi.dev/
 Link ao Repositorio do DockerHub, contendo uma imagem da API 
--[Docker](https://hub.docker.com/repository/docker/giovannivecchi/swapi)
+-[DockerHub](https://hub.docker.com/repository/docker/giovannivecchi/swapi)
 
 ## :rocket: Tecnologias
 
@@ -26,26 +26,31 @@ Caso não utilize o docker , necessário a instalação do Node.js para execuç�
 2. Executando a Aplicação:
 
 ```sh
-  # Instalando a API
-  #
-  #
-  #
-  # Instalando as dependências do projeto.
+
+  # ----- Instalando as dependências do projeto.
   # npm install
-  # Instalando o Banco de dados.
+  #
+  # ----- Instalando o Banco de dados.
   # npm run knex:migrate
-  # Inicie a API
+  #
+  # ----- Inicie a API
   # npm start
 
 
   #DOCKER
-  #caso prefira baixe a imagem no DockerHub (https://hub.docker.com/repository/docker/giovannivecchi/swapi)
-  #ou execute 
+  #----- Caso não efetue o processo acima baixe a imagem no DockerHub)
+  #https://hub.docker.com/repository/docker/giovannivecchi/swapi
+  #
+  #----- Ou execute 
   #docker pull giovannivecchi/swapi
-  #e iniciei
+  #----- E iniciei
   #docker run -p 3336:3336 -d giovannivecchi/swapi
+
 ```
+## :Documentação: Swagger
 
 
----
-Projeto desenvolvido por Giovanni Vecchi.
+Após a instalação a url **http://localhost:3336/** exibirá a documentação da API mostrando as rotas disponiveis para aplicação. 
+
+<img src="/assets/swagger.png">
+<img src="/assets/swaggerget.png">
