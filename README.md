@@ -47,10 +47,10 @@ Caso não utilize o docker , necessário a instalação do Node.js para execuç�
   #docker run -p 3336:3336 -d giovannivecchi/swapi
 
 ```
-## :Documentação: Swagger
+## :bookmark: Documentação: Swagger
 
 
 Após a instalação a url **http://localhost:3336/** exibirá a documentação da API mostrando as rotas disponiveis para aplicação. 
 
-<img src="src/assets/swagger.png">
-<img src="src/assets/swaggerget.png">
+<img src="https://github.com/giovannivecchi/starwapi/blob/master/src/assets/swagger.png">
+<img src="https://github.com/giovannivecchi/starwapi/blob/master/src/assets/swaggerget.png">
