@@ -73,12 +73,12 @@ export default {
       if (filters.nome !== undefined && filters.nome !== `"${p.nome}"`) {
         return false;
       }
-      if (filters.tipo !== undefined && filters.tipo !== `"${p.tipo}"`) {
+      if (filters.terreno !== undefined && filters.terreno !== `"${p.terreno}"`) {
         return false;
       }
       if (
-        filters.planeta !== undefined &&
-        filters.planeta !== `"${p.planeta}"`
+        filters.clima !== undefined &&
+        filters.clima !== `"${p.clima}"`
       ) {
         return false;
       }

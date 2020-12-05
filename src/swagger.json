@@ -1,0 +1,76 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "API StarWars",
+      "description": "",
+      "version": "1.0"
+    },
+    "produces": ["application/json"],
+    "paths": {
+      "/Filmes": {
+        "get": {
+          "x-swagger-router-controller": "home",
+          "tags": ["/Filmes"],
+          "description": "Listar todos os filmes",
+          "parameters": [
+        { "name": "titulo", "in": "\"A New Hope\"", "description": "", "required": false, "type": "string" },
+        { "name": "episodio", "in": "4", "required": false, "type": "string" },
+        { "name": "dataLancamento", "in": "DD/MM/YYYY", "required": false, "type": "string" }],
+          "responses": {}
+        }
+      },
+      "/Personagens": {
+        "get": {
+          "x-swagger-router-controller": "home",
+          "tags": ["/Personagens"],
+          "description": "Listar todos os personagens",
+          "parameters": [
+        { "name": "nome", "in": "\"Luke Skywalker\"", "description": "", "required": false, "type": "string" },
+        { "name": "tipo", "in": "\"fair\"", "required": false, "type": "string" },
+        { "name": "planeta", "in": "\"Tatooine\"", "required": false, "type": "string" }],
+          "responses": {}
+        }
+      },
+      "/Planetas": {
+        "get": {
+          "x-swagger-router-controller": "home",
+          "tags": ["/Planetas"],
+          "description": "Listar todos os Planetas",
+          "parameters": [
+        { "name": "nome", "in": "\"Tatooine\"", "description": "", "required": false, "type": "string" },
+        { "name": "terreno", "in": "\"desert\"", "required": false, "type": "string" },
+        { "name": "clima", "in": "\"arid\"", "required": false, "type": "string" }],
+          "responses": {}
+        }
+      },
+      "/topPersonagens": {
+        "get": {
+          "x-swagger-router-controller": "home",
+          "tags": ["/topPersonagens"],
+          "description": "Listar os personagens mais acessados!",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/topPlanetas": {
+        "get": {
+          "x-swagger-router-controller": "home",
+          "tags": ["/topPlanetas"],
+          "description": "Listar os planetas mais acessados!",
+          "parameters": [],
+          "responses": {}
+        }
+      },
+      "/topFilmes": {
+        "get": {
+          "x-swagger-router-controller": "home",
+          "tags": ["/topFilmes"],
+          "description": "Listar os filmes mais acessados!",
+          "parameters": [],
+          "responses": {}
+        }
+      }
+      
+    }
+ }
+ 

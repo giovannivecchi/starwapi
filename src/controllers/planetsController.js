@@ -6,15 +6,10 @@ import db from '../database/connection';
 class planetController {
   async findPlanets(req, res) {
     try {
-      const { nome, tipo, planeta } = req.query;
+      const { nome, terreno, clima } = req.query;
 
       const results = await api.get('planets/').then(res => {
         return res.data.results;
-      });
-
-      await db('rank_routes').insert({
-        url: req.url,
-        router: 'planets',
       });
 
       const promises = results.map(async planet => ({
@@ -34,8 +29,8 @@ class planetController {
 
       const planetFiltered = await swapiController.filtered(jsonReturn, {
         nome: nome,
-        tipo: tipo,
-        planeta: planeta,
+        terreno: terreno,
+        clima: clima,
       });
 
       await planetFiltered.map(async dados => {

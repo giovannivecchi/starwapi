@@ -12,10 +12,6 @@ class peopleController {
         return res.data.results;
       });
 
-      await db('rank_routes').insert({
-        url: req.url,
-        router: 'people',
-      });
 
       const promises = results.map(async people => ({
         nome: people.name,

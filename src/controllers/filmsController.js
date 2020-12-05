@@ -13,11 +13,6 @@ class filmsController {
         return res.data.results;
       });
 
-      await db('rank_routes').insert({
-        url: req.url,
-        router: 'filmes',
-      });
-
       const promises = results.map(async films => ({
         titulo: films.title,
         episodio: films.episode_id,
@@ -43,6 +38,7 @@ class filmsController {
       );
 
       await filmsFiltered.map(async dados => {
+        console.log(dados.titulo)
         if (dados.titulo !== undefined) {
           await db('rank_films').insert({
             title: dados.titulo,
