@@ -52,5 +52,5 @@ Caso não utilize o docker , necessário a instalação do Node.js para execuç�
 
 Após a instalação a url **http://localhost:3336/** exibirá a documentação da API mostrando as rotas disponiveis para aplicação. 
 
-<img src="/assets/swagger.png">
-<img src="/assets/swaggerget.png">
+<img src="src/assets/swagger.png">
+<img src="src/assets/swaggerget.png">
