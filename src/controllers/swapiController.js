@@ -41,7 +41,7 @@ export default {
     return jsonReturn;
   },
 
-  async filtered(dados, filters, similar) {
+  async filtered(dados, filters, query) {
     const jsonReturn = await dados.filter(p => {
       if (filters.titulo !== undefined && filters.titulo !== `"${p.titulo}"`) {
         return false;
@@ -88,34 +88,18 @@ export default {
     if (Object.entries(filters).length > 0) {
       const like = [];
       dados.filter(p => {
-        switch (similar) {
-          case 'films':
-            {
-              null;
-            }
-            break;
-
+        switch (query) {
+          case 'films': {
+            this.AddOrRemove(jsonReturn, like, p.titulo);
+          }
           case 'planets': {
-            break;
+            this.AddOrRemove(jsonReturn, like, p.nome);
           }
           case 'people': {
             this.AddOrRemove(jsonReturn, like, p.nome);
-            // if (like.length < 3) {
-            //   for (let index = 0; index < dados.length; index++) {
-            //     if (
-            //       dados[index].nome !== undefined &&
-            //       dados[index].nome !== e.nome &&
-            //       like.length < 3
-            //     ) {
-            //       this.AddOrRemove(jsonReturn, like, dados[index].nome);
-            //     }
-            //   }
-            // }
           }
         }
       });
-
-      console.log(like);
 
       jsonReturn.push({ sugestao: like });
     }
@@ -124,13 +108,23 @@ export default {
   },
 
   async AddOrRemove(verify, set, field) {
-    let array1 = verify.findIndex(value => value.nome == field);
-    let array2 = set.findIndex(value => value == field);
-    if (array1 < 0) {
-      if (array2 < 0) {
-        set.push(field);
+    let dadosFiltrados = verify.findIndex(value => {
+      if (value.nome !== undefined) {
+          return value.nome == field;
+      }
+      if (value.titulo !== undefined) {
+        return value.titulo == field;
+      }
+    });
+
+    let dadosSugestao = set.findIndex(value => value == field);
+    if (dadosFiltrados < 0 ) {
+      if (dadosSugestao < 0) {
+        if (set.length < 3) {
+          set.push(field);
+        }
       } else {
-        set.splice(array2, 1);
+        set.splice(dadosSugestao, 1);
       }
     }
   },

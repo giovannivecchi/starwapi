@@ -1,6 +1,7 @@
 import api from '../services/api';
 import axios from 'axios';
 import swapiController from './swapiController';
+import db from '../database/connection';
 
 class planetController {
   async findPlanets(req, res) {
@@ -9,6 +10,11 @@ class planetController {
 
       const results = await api.get('planets/').then(res => {
         return res.data.results;
+      });
+
+      await db('rank_routes').insert({
+        url: req.url,
+        router: 'planets',
       });
 
       const promises = results.map(async planet => ({
@@ -30,6 +36,15 @@ class planetController {
         nome: nome,
         tipo: tipo,
         planeta: planeta,
+      });
+
+      await planetFiltered.map(async dados => {
+        if (dados.nome !== undefined) {
+          await db('rank_planets').insert({
+            name: dados.nome,
+            clima: dados.clima,
+          });
+        }
       });
 
       return res.status(200).json(planetFiltered);

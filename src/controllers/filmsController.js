@@ -2,6 +2,7 @@ import api from '../services/api';
 import { format } from 'date-fns';
 import axios from 'axios';
 import swapiController from './swapiController';
+import db from '../database/connection';
 
 class filmsController {
   async findFilms(req, res) {
@@ -10,6 +11,11 @@ class filmsController {
 
       const results = await api.get('films/').then(res => {
         return res.data.results;
+      });
+
+      await db('rank_routes').insert({
+        url: req.url,
+        router: 'filmes',
       });
 
       const promises = results.map(async films => ({
@@ -24,7 +30,6 @@ class filmsController {
 
       const jsonReturn = await Promise.all(promises);
 
-      console.log(req.query);
       const filmsFiltered = await swapiController.filtered(
         jsonReturn,
         Object.entries(req.query).length == 0
@@ -36,6 +41,15 @@ class filmsController {
             },
         'films'
       );
+
+      await filmsFiltered.map(async dados => {
+        if (dados.titulo !== undefined) {
+          await db('rank_films').insert({
+            title: dados.titulo,
+            director: dados.diretor,
+          });
+        }
+      });
 
       return res.status(200).json(filmsFiltered);
     } catch (err) {

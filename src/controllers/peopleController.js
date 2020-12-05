@@ -1,6 +1,7 @@
 import api from '../services/api';
 import axios from 'axios';
 import swapiController from './swapiController';
+import db from '../database/connection';
 
 class peopleController {
   async findPeople(req, res) {
@@ -9,6 +10,11 @@ class peopleController {
 
       const results = await api.get('people/').then(res => {
         return res.data.results;
+      });
+
+      await db('rank_routes').insert({
+        url: req.url,
+        router: 'people',
       });
 
       const promises = results.map(async people => ({
@@ -36,6 +42,15 @@ class peopleController {
             },
         'people'
       );
+
+      await peopleFiltered.map(async dados => {
+        if (dados.nome !== undefined) {
+          await db('rank_people').insert({
+            name: dados.nome,
+            tipo: dados.tipo,
+          });
+        }
+      });
 
       return res.status(200).json(peopleFiltered);
     } catch (err) {

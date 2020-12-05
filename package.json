@@ -9,7 +9,9 @@
     "dev": "nodemon --exec sucrase-node ./src/server.js",
     "start": "sucrase-node ./src/server.js",
     "deploy-start": "pm2 start ecosystem.config.js --env=production && pm2 save",
-    "deploy-stop": "pm2 delete starsapi"
+    "deploy-stop": "pm2 delete starsapi",
+    "knex:migrate": "knex --knexfile knexfile.js migrate:latest",
+    "knex:migrate:rollback": "knex --knexfile knexfile.js migrate:rollback"
   },
   "dependencies": {
     "add": "^2.0.6",
@@ -17,6 +19,8 @@
     "cors": "^2.8.5",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
+    "knex": "^0.21.12",
+    "sqlite3": "^5.0.0",
     "yarn": "^1.22.4"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import https from 'https';
+import http from 'http';
 import express from 'express';
 import cors from 'cors';
 import routes from './routes';
@@ -6,9 +6,7 @@ import routes from './routes';
 
 class App {
   constructor() {
-    // HTTPS
-    this.server = https.createServer(express());
-    // HTTP
+    this.server = http.createServer(express());
     this.server = express();
 
     this.middlewares();
