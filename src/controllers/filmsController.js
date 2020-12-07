@@ -37,8 +37,7 @@ class filmsController {
         'films'
       );
 
-      await filmsFiltered.map(async dados => {
-        console.log(dados.titulo)
+      await filmsFiltered.map(async dados => {        
         if (dados.titulo !== undefined) {
           await db('rank_films').insert({
             title: dados.titulo,

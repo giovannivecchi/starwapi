@@ -13,9 +13,9 @@
           "tags": ["/Filmes"],
           "description": "Listar todos os filmes",
           "parameters": [
-        { "name": "titulo", "in": "\"A New Hope\"", "description": "", "required": false, "type": "string" },
-        { "name": "episodio", "in": "4", "required": false, "type": "string" },
-        { "name": "dataLancamento", "in": "DD/MM/YYYY", "required": false, "type": "string" }],
+        { "name": "titulo", "in": "query", "description": "", "required": false, "type": "Ex: \"A New Hope\"" },
+        { "name": "episodio", "in": "query", "required": false, "type":  "Ex: \"4\"" },
+        { "name": "dataLancamento", "in": "query", "required": false, "type": "Ex: DD/MM/YYYY" }],
           "responses": {}
         }
       },
@@ -25,9 +25,9 @@
           "tags": ["/Personagens"],
           "description": "Listar todos os personagens",
           "parameters": [
-        { "name": "nome", "in": "\"Luke Skywalker\"", "description": "", "required": false, "type": "string" },
-        { "name": "tipo", "in": "\"fair\"", "required": false, "type": "string" },
-        { "name": "planeta", "in": "\"Tatooine\"", "required": false, "type": "string" }],
+        { "name": "nome", "in": "query", "description": "", "required": false, "type": "Ex: \"Luke Skywalker\"" },
+        { "name": "tipo", "in": "query", "required": false, "type": "Ex: \"fair\"" },
+        { "name": "planeta", "in":"query", "required": false, "type":  "Ex: \"Tatooine\"" }],
           "responses": {}
         }
       },
@@ -37,9 +37,9 @@
           "tags": ["/Planetas"],
           "description": "Listar todos os Planetas",
           "parameters": [
-        { "name": "nome", "in": "\"Tatooine\"", "description": "", "required": false, "type": "string" },
-        { "name": "terreno", "in": "\"desert\"", "required": false, "type": "string" },
-        { "name": "clima", "in": "\"arid\"", "required": false, "type": "string" }],
+        { "name": "nome", "in": "query", "description": "", "required": false, "type": "Ex: \"Tatooine\"" },
+        { "name": "terreno", "in": "query" , "required": false, "type": "Ex: \"desert\"" },
+        { "name": "clima", "in": "query", "required": false, "type": "Ex: \"arid\"" }],
           "responses": {}
         }
       },
